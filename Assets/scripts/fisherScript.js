@@ -12,7 +12,7 @@ var speed : float;;
 var isDying : boolean;
 var dyingDelay : float;
 
-var ballon : GameObject;
+var ballonParent : GameObject;
 var remainColors : GameObject[];
 
 var colorDelay : float;
@@ -21,6 +21,7 @@ var rotationPoint : Vector3;
 var rotationDelay : float;
 
 private var worldPoint : Vector3;
+private var ballonBhv : ballonScript;
 
 function Start () {
 	isDying = false;
@@ -39,7 +40,7 @@ function Update () {
 
 function listenColor(color : int) {
     if(colors[actualHit] == color) {
-        addFadeAndDie(remainColors[actualHit], colorDelay);
+        ballonBhv.removeColor(actualHit, colorDelay);
         ++actualHit;
         if(actualHit == ballonLength) {
             die();
@@ -55,6 +56,8 @@ function initFisher(c : Array, length : int, velocity: float, gm : GameObject) {
     gameMaster = gm;
     ballonLength = length;
     speed = velocity;
+    var ballon : GameObject = Instantiate(ballonsSprites[length], ballonParent.transform);
+    ballonBhv = ballon.GetComponent(ballonScript) as ballonScript;
 }
 
 function die() {
