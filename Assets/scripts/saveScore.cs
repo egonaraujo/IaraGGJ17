@@ -13,15 +13,15 @@ public static class  SaveScore {
 
    public static void Save(){
      BinaryFormatter bf = new BinaryFormatter();
-     FileStream file = File.Create (Application.persistentDataPath + "/savedGames.gd");
+     FileStream file = File.Create ("leaderboard.txt"); //save leaderboard in this file
      bf.Serialize(file, SaveScore.leaderboard);
      file.Close();
    }
 
    public static void Load(){
-     if(File.Exists(Application.persistentDataPath + "/savedGames.gd")) {
+     if(File.Exists("leaderboard.txt")) { //check if has leaderboard saved
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
+        FileStream file = File.Open("leaderboard.txt", FileMode.Open);
         SaveScore.leaderboard = (List<Something>)bf.Deserialize(file);
         file.Close();
       }
@@ -33,14 +33,10 @@ public static class  SaveScore {
         SaveScore.leaderboard.Add(test);
       }
       SaveScore.leaderboard.Add(actual);  //add new score to list
-      Debug.Log("Antes de ordenar");
-      PrintScoreBoard();
+      //sort scores
       SaveScore.leaderboard = SaveScore.leaderboard.OrderByDescending(x => x.score).ToList(); //order by score
-      Debug.Log("Depois de ordenar");
-      PrintScoreBoard();
+      //remove last one
       SaveScore.leaderboard.RemoveAt(SaveScore.leaderboard.Count -1);
-      Debug.Log("Depois de remover");
-      PrintScoreBoard();
    }
 
    public static void PrintScoreBoard(){
