@@ -5,6 +5,11 @@ private var fishers : Array;
 var fisherPrefab : GameObject;
 private var score : int;
 
+var upperLimit : float;
+var lowerLimit : float;
+
+var initialX : float;
+
 function Start () {
     fishers = new Array();
 }
@@ -25,4 +30,11 @@ function emitColor (color : int) {
 
 function addScore() {
     ++score;
+}
+
+function addFisher() {
+    var position : Vector3 = Vector3(
+        initialX,
+        lowerLimit + (upperLimit - lowerLimit) * Random.value);
+    Instantiate(fisherPrefab, position, Quaternion.identity);
 }
