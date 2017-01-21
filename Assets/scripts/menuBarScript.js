@@ -8,6 +8,7 @@ var timePressed : float;
 var isPressioned : boolean;
 var timeWait : float;
 var deltaTime : float;
+var index : int;
 
 var options = ["Jogar", "Melhores Colocações", "Instruções"];
 
@@ -15,6 +16,7 @@ function Start () {
   deltaTime = 0;
   isPressioned = false;
   timeWait = 2;
+  index = 0;
 }
 
 function Update () {
@@ -32,15 +34,29 @@ function startTimer(){
 function checkUp(){
   if(Input.GetButtonUp("Jump") && (isPressioned==true)){
     deltaTime = Time.time - timePressed;
-    Debug.Log("Precionado por: " + deltaTime);
-    Debug.Log("timeWait: " + timeWait);
+    //Debug.Log("Precionado por: " + deltaTime);
+    //Debug.Log("timeWait: " + timeWait);
     if(deltaTime>timeWait){
       //mudar a scene pra opção escolhida
       isPressioned = false;
-      Debug.Log("Maior escolhe");
+      changeScene();
     }else{
       isPressioned = false;
-      Debug.Log("Menor muda");
+      changeOption();
     }
   }
+}
+
+function changeScene(){
+  Debug.Log("Vou trocar a cena");
+  if(index<3){
+    Debug.Log(options[index]);
+    index++;
+  }else{
+    index = 0;
+  }
+}
+
+function changeOption(){
+  Debug.Log("Vou trocar a option");
 }
