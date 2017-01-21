@@ -2,8 +2,6 @@
 
 var ballonsSprites : GameObject[];
 var colorsSprite : GameObject[];
-var minBallonSize : int;
-var maxBallonSize : int;
 var ballonLength : int;
 
 var actualHit : int;
@@ -50,7 +48,7 @@ function listenColor(color : int) {
     return true;
 }
 
-function initFisher(c : int[], length : int, velocity: float, gm : GameObject) {
+function initFisher(c : Array, length : int, velocity: float, gm : GameObject) {
     for (var i = 0; i < length; ++i) {
         colors[i] = c[i];
     }
