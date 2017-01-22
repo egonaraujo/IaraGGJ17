@@ -6,7 +6,6 @@ private var rend : SpriteRenderer;
 private var factor : float;
 
 function Start () {
-    isDying = false;
     rend = gameObject.GetComponent(SpriteRenderer) as SpriteRenderer;
 }
 
@@ -24,5 +23,5 @@ function Update () {
 function initBhv(delay : float) {
     isDying = true;
     dieTime = Time.time + delay;
-    factor = 1 / delay;
+    factor = delay;
 }

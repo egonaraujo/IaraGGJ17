@@ -8,7 +8,7 @@ var upperLimit : float;
 var lowerLimit : float;
 
 private var cursorPercent : float;
-private var numberOfColors : int = 7;
+private var numberOfColors : int = 6;
 var isColorSelected : boolean;
 var isMoving : boolean;
 var isShooting : boolean;
@@ -86,6 +86,7 @@ function startMove () {
         if(fireColor > (numberOfColors -1 )) {
             fireColor = (numberOfColors -1);
         }
+            Debug.Log(fireColor);
 
         // Emit the color
         isShooting = false;

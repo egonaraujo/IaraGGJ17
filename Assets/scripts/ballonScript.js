@@ -11,7 +11,7 @@ function Update() {
 
 }
 
-function setColors (colors : GameObject[]) {
+function setColors (colors : Array) {
     for (var i : int = 0; i < colors.length; ++i) {
         colorsSprites[i] = Instantiate(colors[i], colorsParents[i].transform);
     }

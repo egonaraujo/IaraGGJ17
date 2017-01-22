@@ -20,7 +20,7 @@ var fisherIncrease : float;
 var fisherTimeIncrease : float;
 var fisherRange : float;
 
-var colorsNumber : float;
+private var colorsNumber : float;
 var colorsTimeIncrease : float;
 
 var maxColors : int;
@@ -38,6 +38,8 @@ var minBallonSize : int;
 var maxBallonSize : int;
 
 
+var boatSprites : Sprite[];
+
 function Start () {
     fishers = new Array();
     nextColorsIncrease = Time.time + colorsTimeIncrease;
@@ -46,7 +48,8 @@ function Start () {
 
     nextFisherSpeed = randomInRange(fisherSpeed, fisherRange);
     nextSpawnTime = Time.time + randomInRange(spawnSpeed, spawnRange);
-    bigColorsArray = new float[10];
+    colorsNumber = minBallonSize;
+    bigColorsArray = new Array();
 }
 
 function Update () {
@@ -61,7 +64,7 @@ function Update () {
 
     if(spawnIncrease > 0) {
         if(nextSpawnIncrease < Time.time) {
-            spawnSpeed += spawnIncrease;
+            spawnSpeed -= spawnIncrease;
             nextSpawnIncrease = Time.time + spawnTimeIncrease;
         }
     }
@@ -79,7 +82,7 @@ function Update () {
         bigColorsArray.Clear();
         bigColorsArray.length = size;
         for (var i = 0; i < size; ++i) {
-            bigColorsArray[i] = randomInt(maxColors); 
+            bigColorsArray[i] = randomInt(maxColors);
         }
 
         fisherBhv.initFisher(bigColorsArray, size, nextFisherSpeed, gameObject);
@@ -101,7 +104,6 @@ function emitColor (color : int) {
 
 function addScore() {
     ++score;
-    removeFisher();
 }
 
 function addFisher() {
@@ -109,6 +111,8 @@ function addFisher() {
         initialX,
         lowerLimit + (upperLimit - lowerLimit) * Random.value);
     var fisher : GameObject = Instantiate(fisherPrefab, position, Quaternion.identity) as GameObject;
+    var rend : SpriteRenderer = fisher.GetComponent(SpriteRenderer) as SpriteRenderer;
+    rend.sprite = boatSprites[randomInt(boatSprites.length)];
     fishers.push(fisher);
     return fisher.GetComponent(fisherScript) as fisherScript;
 }
@@ -135,6 +139,9 @@ function randomInRange (midPoint: float, range: float) {
 }
 
 function randomInt(max : int) {
+    if (max == 0) {
+        return 0;
+    }
     var aux : int = Mathf.Floor(Random.value * max);
     if(aux == max) {
         aux = max -1;
