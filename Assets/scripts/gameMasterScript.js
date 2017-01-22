@@ -106,9 +106,10 @@ function Update () {
             end = true;
             SaveScore.Load();
             SaveScore.AddScore(Something(score));
+            SaveScore.Save();
             Destroy(bar);
             for (var fisher : GameObject in fishers) {
-                Destroy(fisher);            
+                Destroy(fisher);
             }
         }
     }
