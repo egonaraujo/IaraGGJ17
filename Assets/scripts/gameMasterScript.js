@@ -37,6 +37,8 @@ private var bigColorsArray : Array;
 var minBallonSize : int;
 var maxBallonSize : int;
 
+private var endGameTime : float;
+private var end : boolean;
 
 var boatSprites : Sprite[];
 
@@ -50,45 +52,65 @@ function Start () {
     nextSpawnTime = Time.time + randomInRange(spawnSpeed, spawnRange);
     colorsNumber = minBallonSize;
     bigColorsArray = new Array();
+
+    endGameTime = Time.time + GameTime;
+    end = false;
 }
 
 function Update () {
-	if(colorsTimeIncrease > 0) {
-        if(colorsNumber < maxColors) {
-            if(nextColorsIncrease < Time.time) {
-                ++colorsNumber;
-                nextColorsIncrease = Time.time + colorsTimeIncrease;
+    if(end) {
+        if(Input.GetButtonDown("Jump")) { // Spacebar Pressed
+            SceneManager.LoadScene("menu");
+        }
+    }
+    else {
+        if(colorsTimeIncrease > 0) {
+            if(colorsNumber < maxColors) {
+                if(nextColorsIncrease < Time.time) {
+                    ++colorsNumber;
+                    nextColorsIncrease = Time.time + colorsTimeIncrease;
+                }
             }
         }
-    }
 
-    if(spawnIncrease > 0) {
-        if(nextSpawnIncrease < Time.time) {
-            spawnSpeed -= spawnIncrease;
-            nextSpawnIncrease = Time.time + spawnTimeIncrease;
-        }
-    }
-
-    if(fisherIncrease > 0) {
-        if(nextFisherIncrease < Time.time) {
-            fisherSpeed += fisherIncrease;
-            nextFisherIncrease = Time.time + fisherTimeIncrease;
-        }
-    }
-
-    if(nextSpawnTime < Time.time) {
-        var fisherBhv : fisherScript = addFisher();
-        var size : float = minBallonSize + randomInt(colorsNumber-minBallonSize);
-        bigColorsArray.Clear();
-        bigColorsArray.length = size;
-        for (var i = 0; i < size; ++i) {
-            bigColorsArray[i] = randomInt(maxColors);
+        if(spawnIncrease > 0) {
+            if(nextSpawnIncrease < Time.time) {
+                spawnSpeed -= spawnIncrease;
+                nextSpawnIncrease = Time.time + spawnTimeIncrease;
+            }
         }
 
-        fisherBhv.initFisher(bigColorsArray, size, nextFisherSpeed, gameObject);
+        if(fisherIncrease > 0) {
+            if(nextFisherIncrease < Time.time) {
+                fisherSpeed += fisherIncrease;
+                nextFisherIncrease = Time.time + fisherTimeIncrease;
+            }
+        }
 
-        nextFisherSpeed = randomInRange(fisherSpeed, fisherRange);
-        nextSpawnTime = Time.time + randomInRange(spawnSpeed, spawnRange);
+        if(nextSpawnTime < Time.time) {
+            var fisherBhv : fisherScript = addFisher();
+            var size : float = minBallonSize + randomInt(colorsNumber-minBallonSize);
+            bigColorsArray.Clear();
+            bigColorsArray.length = size;
+            for (var i = 0; i < size; ++i) {
+                bigColorsArray[i] = randomInt(maxColors);
+            }
+
+            fisherBhv.initFisher(bigColorsArray, size, nextFisherSpeed, gameObject);
+
+            nextFisherSpeed = randomInRange(fisherSpeed, fisherRange);
+            nextSpawnTime = Time.time + randomInRange(spawnSpeed, spawnRange);
+        }
+
+        if(endGameTime < Time.time) {
+            end = true;
+            SaveScore.Load();
+            SaveScore.AddScore(Something(score));
+            Destroy(bar);
+            for (var fisher : GameObject in fishers) {
+                Destroy(fisher);            
+            }
+        }
     }
 }
 

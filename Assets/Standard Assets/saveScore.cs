@@ -43,4 +43,12 @@ public static class  SaveScore {
      for(int i = 0; i<SaveScore.leaderboard.Count; ++i)
       Debug.Log(SaveScore.leaderboard[i].getScore());
    }
+
+   public static string[] getLeaderBoard() {
+    string[] highScore = new string[10];
+    for(int i = 0; i < SaveScore.leaderboard.Count; ++i) {
+        highScore[i] = "" + SaveScore.leaderboard[i].score;
+    }
+    return highScore;
+   }
 }

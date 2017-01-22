@@ -1,8 +1,6 @@
 ﻿#pragma strict
 
-var cursor : GameObject;
-var bar : GameObject;
-var gameMaster : GameObject;
+import UnityEngine.SceneManagement;
 
 var timePressed : float;
 var isPressioned : boolean;
@@ -11,12 +9,14 @@ var deltaTime : float;
 var index : int;
 var position : int;
 
-var options = ["Jogar", "Equipe", "Instruções", "Leaderboard"];
+var options : String [];
+
+var buttons : GameObject [];
 
 function Start () {
   deltaTime = 0;
   isPressioned = false;
-  timeWait = 2;
+  timeWait = 1;
   index = 0;
   position = 0;
 }
@@ -48,21 +48,19 @@ function checkUp(){
 }
 
 function changeScene(){
-  Debug.Log("Vou trocar a cena");
-  if(index<4){
-    Debug.Log(options[index]);
-    index++;
-  }else{
-    index = 0;
-  }
+    SceneManager.LoadScene(options[position]);
 }
 
 function changeOption(){
-  Debug.Log("Vou trocar a option");
-  if(position<4){
-    Debug.Log(options[position]);
+  if(position<3){
     position++;
+
   }else{
     position = 0;
   }
+
+  for (var i : int = 0; i < 4; ++i) {
+    buttons[i].SetActive(false);
+  }
+  buttons[position].SetActive(true);
 }
