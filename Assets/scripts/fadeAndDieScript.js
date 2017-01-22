@@ -23,5 +23,5 @@ function Update () {
 function initBhv(delay : float) {
     isDying = true;
     dieTime = Time.time + delay;
-    factor = delay;
+    factor = 1 / delay;
 }

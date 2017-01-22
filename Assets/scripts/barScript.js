@@ -20,6 +20,11 @@ private var blockedTime : float;
 var blockDelay : float;
 var blocked : boolean;
 
+var effects : GameObject[];
+
+private var lastEffectColor : int;
+private var actualEffectColor : int;
+
 
 function Start () {
     isMoving = false;
@@ -27,11 +32,13 @@ function Start () {
     timeLimit = Time.time;
     cursorPercent = 0.5;
     increment = step;
+    //updateEffect();
 }
 
 function Update () {
     if(blocked) {
         if(blockedTime < Time.time) {
+            effects[actualEffectColor].SetActive(true);
             blocked = false;
             if(Input.GetButton("Jump")){
                 startMove();
@@ -60,6 +67,7 @@ function Update () {
                 cursorPercent = 0;
                 increment *= -1;
             }
+            //updateEffect();
         }
 
         if(isShooting) { //Color is select, must press again to shot
@@ -81,36 +89,41 @@ function isRightColor (color : int) {
 }
 
 function startMove () {
-    if(isColorSelected) { //Fire the color
-        var fireColor : int = Mathf.Floor(numberOfColors * cursorPercent);
-        if(fireColor > (numberOfColors -1 )) {
-            fireColor = (numberOfColors -1);
-        }
-            Debug.Log(fireColor);
-
-        // Emit the color
-        isShooting = false;
-        isColorSelected = false;
-        //Move the cursor
-        isMoving = true;
-
-        if (!isRightColor(fireColor)) {
-            blocked = true;
-            blockedTime = Time.time + blockDelay;
-            isMoving = false;
-        }
-    }
-    else {
-        isMoving = true;
-    }
+    isMoving = true;
+    effects[actualEffectColor].SetActive(false);
 }
 
 function stopMove() {
-    if(!isColorSelected) { // Cursor just stoped
-        // start timeStamp to shoot
-        isShooting = true;
-        timeLimit = Time.time + delay;
-        isColorSelected = true;
+    var fireColor : int = Mathf.Floor(numberOfColors * cursorPercent);
+    if(fireColor > (numberOfColors -1 )) {
+        fireColor = (numberOfColors -1);
+    }
+    // Emit the color
+    isShooting = false;
+    isColorSelected = false;
+
+    effects[fireColor].SetActive(true);
+    if (!isRightColor(fireColor)) {
+        blocked = true;
+        blockedTime = Time.time + blockDelay;
+        effects[actualEffectColor].SetActive(false);
+        effects[fireColor].SetActive(false);
     }
     isMoving = false;
+    actualEffectColor = fireColor;
+}
+
+function updateEffect() {
+    actualEffectColor = Mathf.Floor(numberOfColors * cursorPercent);
+    if(actualEffectColor > (numberOfColors -1 )) {
+        actualEffectColor = (numberOfColors -1);
+    }
+
+    Debug.Log(actualEffectColor);
+    Debug.Log(lastEffectColor);
+    if(actualEffectColor != lastEffectColor) {
+        effects[lastEffectColor].SetActive(false);
+        effects[actualEffectColor].SetActive(true);
+        lastEffectColor = actualEffectColor;
+    }
 }

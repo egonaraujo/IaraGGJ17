@@ -42,6 +42,10 @@ private var end : boolean;
 
 var boatSprites : Sprite[];
 
+var scoreText : UI.Text;
+var timeText : UI.Text;
+var endGameText : UI.Text;
+
 function Start () {
     fishers = new Array();
     nextColorsIncrease = Time.time + colorsTimeIncrease;
@@ -117,12 +121,15 @@ function Update () {
 
 function emitColor (color : int) {
     var success : boolean = false;
+    var hited: int = 0;
     for (var fisher : GameObject in fishers) {
         var fisherBhv : fisherScript = fisher.GetComponent(fisherScript) as fisherScript;
-        success = success || fisherBhv.listenColor(color);
+        if(fisherBhv.listenColor(color)) {
+            ++hited;
+        }
     }
 
-    return success;
+    return hited > 0;
 }
 
 function addScore() {
@@ -170,4 +177,15 @@ function randomInt(max : int) {
         aux = max -1;
     }
     return aux;
+}
+
+function OnGUI () {
+    scoreText.text = "Pontos: " + score;
+    timeText.text = "" + Mathf.Floor((endGameTime - Time.time));
+    if(end) {
+        endGameText.text = "Muito bem você conseguiu: " + score + "\n Presione a barra para sair";
+    }
+    else {
+        endGameText.text = "";
+    }
 }
