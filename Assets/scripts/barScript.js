@@ -25,6 +25,7 @@ var effects : GameObject[];
 private var lastEffectColor : int;
 private var actualEffectColor : int;
 
+var musicPlayerBhv : musicPlayerScript;
 
 function Start () {
     isMoving = false;
@@ -108,6 +109,9 @@ function stopMove() {
         blockedTime = Time.time + blockDelay;
         effects[actualEffectColor].SetActive(false);
         effects[fireColor].SetActive(false);
+    }
+    else {
+        musicPlayerBhv.playSound(fireColor);
     }
     isMoving = false;
     actualEffectColor = fireColor;

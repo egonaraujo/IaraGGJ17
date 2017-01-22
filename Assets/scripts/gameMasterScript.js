@@ -183,7 +183,7 @@ function OnGUI () {
     scoreText.text = "Pontos: " + score;
     timeText.text = "" + Mathf.Floor((endGameTime - Time.time));
     if(end) {
-        endGameText.text = "Muito bem você conseguiu: " + score + "\n Presione a barra para sair";
+        endGameText.text = "Muito bem você conseguiu afundar " + score + " barcos\n Presione a barra para sair";
     }
     else {
         endGameText.text = "";
