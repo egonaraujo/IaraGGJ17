@@ -111,7 +111,7 @@ function stopMove() {
         effects[fireColor].SetActive(false);
     }
     else {
-        musicPlayerBhv.playSound(fireColor);
+        //musicPlayerBhv.playSound(fireColor);
     }
     isMoving = false;
     actualEffectColor = fireColor;
