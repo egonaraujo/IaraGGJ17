@@ -1,8 +1,8 @@
 # Iara
 
-(Link)[https://v3.globalgamejam.org/2017/games/iara]
-is a game made for Global Game Jam 17
-where the theme was Waves
+[Link](https://v3.globalgamejam.org/2017/games/iara)
+
+Iara is a game made for Global Game Jam 17 where the theme was Waves
 
 # Engine
 
