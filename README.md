@@ -28,17 +28,19 @@ In Game
 # Team
 
 ## Game Designers
-Egon Araujo
-Lucas Fernandes de Oliveira
+
+* Egon Araujo
+* Lucas Fernandes de Oliveira
 
 ## Programmers
-Lucas Fernandes de Oliveira
-Marcela Ribeiro de Oliveira
+
+* Lucas Fernandes de Oliveira
+* Marcela Ribeiro de Oliveira
 
 ## Art Designer
-Daniela Jagher
+
+* Daniela Jagher
 
 ## Sound Designer
-Leonardo Lima
 
-
+* Leonardo Lima
